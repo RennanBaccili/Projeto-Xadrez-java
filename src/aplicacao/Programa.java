@@ -1,11 +1,12 @@
 package aplicacao;
 
-import jogodetabueiro.Posicao;
-import jogodetabueiro.Tabuleiro;
+import xadrez.PartidadeXadrez;
+import xadrez.UI;
 
 public class Programa {
 	public static void main(String[]args) {
 		
-	Tabuleiro tabuleiro = new Tabuleiro(5, 4);
+	PartidadeXadrez partidadeXadrez = new PartidadeXadrez();
+	UI.printTabuleiro(partidadeXadrez.Getpecas()); // Interface de usuario UI
 	}
 }
