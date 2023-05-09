@@ -1,7 +1,6 @@
 package aplicacao;
 
 import xadrez.PartidadeXadrez;
-import xadrez.UI;
 
 public class Programa {
 	public static void main(String[]args) {

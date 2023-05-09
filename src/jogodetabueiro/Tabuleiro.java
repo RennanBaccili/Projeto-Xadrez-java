@@ -35,4 +35,10 @@ public class Tabuleiro {
 		return pecas[posicao.getLinha()][posicao.getColuna()];
 	}	
 	
+	public void placePeca(Peca peca, Posicao posicao) {
+		pecas[posicao.getLinha()][posicao.getColuna()] = peca; // to pegando a matriz criada na posicao dada
+		// e atribuir a ela a posicao dada
+		peca.posicao = posicao;
+	}
+	
 }
