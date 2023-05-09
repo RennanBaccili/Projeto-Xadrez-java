@@ -27,7 +27,7 @@ public class PartidadeXadrez {
 	
 	private void inicialSetup() { // funcao que faz inicializacao da partida de xadrez
 		tabuleiro.placePeca(new Torre(tabuleiro,Cor.WHITE), new Posicao(2,4)); // colocamos as pecas
-		tabuleiro.placePeca(new Rei(tabuleiro,Cor.BLACK), new Posicao(0,4));
+		tabuleiro.placePeca(new Rei(tabuleiro,Cor.BLACK), new Posicao(1,4));
 		tabuleiro.placePeca(new Rei(tabuleiro,Cor.WHITE), new Posicao(7,4));
 	}
 }
