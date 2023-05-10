@@ -25,9 +25,14 @@ public class PartidadeXadrez {
 		return mat;
 	}
 	
+	//instanciacao de peca dentro do tabuleiro
+	private void instanciePecaXadrez(char coluna, int linha, PecaXadrez peca){
+		tabuleiro.placePeca(peca, new PosicaoXadrez(coluna, linha).xadPosicao());
+	}
+	
 	private void inicialSetup() { // funcao que faz inicializacao da partida de xadrez
-		tabuleiro.placePeca(new Torre(tabuleiro,Cor.WHITE), new Posicao(2,4)); // colocamos as pecas
-		tabuleiro.placePeca(new Rei(tabuleiro,Cor.BLACK), new Posicao(1,4));
-		tabuleiro.placePeca(new Rei(tabuleiro,Cor.WHITE), new Posicao(7,4));
+		instanciePecaXadrez('b',6, new Torre(tabuleiro,Cor.WHITE)); // colocamos as pecas
+		instanciePecaXadrez('e',8, new Rei(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('e',1, new Rei(tabuleiro,Cor.WHITE));
 	}
 }

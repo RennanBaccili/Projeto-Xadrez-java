@@ -9,6 +9,7 @@ public class Tabuleiro {
 		if(linhas < 1|| colunas <1) {
 			throw new ExcecaoTabuleiro("Erro ao criar o tabuleiro: é necessario existir pelos menos uma linhas e uma colunas ");
 		}
+		
 		this.linhas = linhas;
 		this.colunas = colunas;
 		pecas = new Peca[linhas][colunas]; 
@@ -26,12 +27,14 @@ public class Tabuleiro {
 		if(!posicaoExiste(linha,coluna)) {
 			throw new ExcecaoTabuleiro("Posição não está do tabuleiro");
 		}
+		
 		return pecas[linha][coluna];
 	}
 	public Peca peca(Posicao posicao) {// metodo piece para retornar a peça
 		if(!posicaoExiste(posicao)) {
 			throw new ExcecaoTabuleiro("Posição não está do tabuleiro");
 		}
+		
 		return pecas[posicao.getLinha()][posicao.getColuna()];
 	}	
 	
@@ -39,6 +42,7 @@ public class Tabuleiro {
 		if(temPeca(posicao)) {
 			throw new ExcecaoTabuleiro("Ja existe uma peça nessa posicao " + posicao);
 		}
+		
 		pecas[posicao.getLinha()][posicao.getColuna()] = peca; // to pegando a matriz criada na posicao dada
 		// e atribuir a ela a posicao dada
 		peca.posicao = posicao;
