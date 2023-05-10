@@ -1,6 +1,5 @@
 package xadrez;
 
-import jogodetabueiro.Posicao;
 import jogodetabueiro.Tabuleiro;
 import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
@@ -31,8 +30,17 @@ public class PartidadeXadrez {
 	}
 	
 	private void inicialSetup() { // funcao que faz inicializacao da partida de xadrez
-		instanciePecaXadrez('b',6, new Torre(tabuleiro,Cor.WHITE)); // colocamos as pecas
-		instanciePecaXadrez('e',8, new Rei(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('c',1, new Torre(tabuleiro,Cor.WHITE)); // colocamos as pecas
+		instanciePecaXadrez('c',2, new Rei(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('e',2, new Rei(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('e',1, new Rei(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('d',1, new Rei(tabuleiro,Cor.WHITE));
+		
+		instanciePecaXadrez('c',7, new Rei(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('c',8, new Rei(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('d',7, new Rei(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('e',7, new Rei(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('e',8, new Rei(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('d',8, new Rei(tabuleiro,Cor.BLACK));
 	}
 }
