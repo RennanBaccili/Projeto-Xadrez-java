@@ -1,5 +1,7 @@
 package xadrez;
 
+import jogodetabueiro.Peca;
+import jogodetabueiro.Posicao;
 import jogodetabueiro.Tabuleiro;
 import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
@@ -22,6 +24,31 @@ public class PartidadeXadrez {
 			}
 		}
 		return mat;
+	}
+	
+	//movimento de peca
+	
+	public PecaXadrez exeMoverPeca(PosicaoXadrez posicaoInicial,PosicaoXadrez posicaoFinal) {
+		Posicao pinicial = posicaoInicial.xadPosicao(); // aqui estanciamos posicao inicial
+		Posicao pfinal = posicaoFinal.xadPosicao(); // e posicao final
+		validacaoPeca(pinicial); /* essa operação determina se existe uma peça no local indicado, se não tiver peça a ser movida
+		 o programa lança uma exception */
+		Peca capturaPeca = moverPeca(pinicial, pfinal); // operacao responsavel por movimentar peca
+		return (PecaXadrez)capturaPeca; //  ele retorna a peca capturada, conceito de downcast
+	}
+	
+	private Peca moverPeca(Posicao pinicial, Posicao pfinal) { // logica de realizar um movimento
+		Peca p = tabuleiro.removePeca(pinicial); // a peca vai ser removida da posicao inicial e movida para a final
+		Peca capturaPeca = tabuleiro.removePeca(pfinal); 
+		tabuleiro.placePeca(p, pfinal); // peça p para o local final
+		return capturaPeca;
+	}
+	
+	
+	private void validacaoPeca(Posicao posicao) {
+		if (!tabuleiro.temPeca(posicao)) { // se nã́o tiver peca para ser movida emprime o erro abaixo
+			throw new ExcecaoXadrez("Não existe peça na posição de origem");
+		}
 	}
 	
 	//instanciacao de peca dentro do tabuleiro
