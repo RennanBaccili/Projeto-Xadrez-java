@@ -1,7 +1,10 @@
 package aplicacao;
 
+import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import xadrez.Cor;
 import xadrez.PartidadeXadrez;
@@ -52,9 +55,10 @@ public class UI {
 	}// posicao de xadrez é uma letra e um número
 	
 	
-	public static void printPartida(PartidadeXadrez partidadexadrez) {
+	public static void printPartida(PartidadeXadrez partidadexadrez, List<PecaXadrez> capturada) {
 		printTabuleiro(partidadexadrez.Getpecas());
 		System.out.println();
+		printPecasCapturadas(capturada);
 		System.out.println("Turno : " + partidadexadrez.getTurno());
 		System.out.println("Esperando o turno do jogard " + partidadexadrez.getVezdoJogador());
 	}
@@ -101,4 +105,22 @@ public class UI {
 		}
 		System.out.print(" ");
 	}
+	
+
+	private static void printPecasCapturadas(List<PecaXadrez>capturada) {
+		List<PecaXadrez> white =  capturada.stream().filter(x -> x.getCor() == Cor.WHITE).collect(Collectors.toList());
+		List<PecaXadrez> black =  capturada.stream().filter(x -> x.getCor() == Cor.BLACK).collect(Collectors.toList());
+		System.out.println("Peças capturadas: ");
+		System.out.print("White: ");
+		System.out.println(ANSI_WHITE);
+		System.out.println(Arrays.toString(white.toArray()));
+		System.out.println(ANSI_RESET);
+		System.out.print("Black: ");
+		System.out.println(ANSI_YELLOW);
+		System.out.println(Arrays.toString(black.toArray()));
+		System.out.println(ANSI_RESET);
+	}
+		
+	
 }
+

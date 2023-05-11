@@ -1,5 +1,8 @@
 package xadrez;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jogodetabueiro.Peca;
 import jogodetabueiro.Posicao;
 import jogodetabueiro.Tabuleiro;
@@ -11,6 +14,9 @@ public class PartidadeXadrez {
 	private int turno;
 	private Cor vezdoJogador;
 	private Tabuleiro tabuleiro;
+	
+	private List<Peca> pecanoTabuleiro = new ArrayList<>();
+	private List<Peca> pecasCapturadas = new ArrayList<>();
 
 	public PartidadeXadrez() {
 		tabuleiro = new Tabuleiro(8, 8);// classe que determina o tamanho de um tabuleiro
@@ -64,6 +70,12 @@ public class PartidadeXadrez {
 		Peca p = tabuleiro.removePeca(pinicial); // a peca vai ser removida da posicao inicial e movida para a final
 		Peca capturaPeca = tabuleiro.removePeca(pfinal); 
 		tabuleiro.placePeca(p, pfinal); // peça p para o local final
+		
+		if (capturaPeca != null) {
+			pecanoTabuleiro.remove(capturaPeca);
+			pecasCapturadas.add(capturaPeca);
+			
+		}
 		return capturaPeca;
 	}
 	
@@ -95,6 +107,7 @@ public class PartidadeXadrez {
 	//instanciacao de peca dentro do tabuleiro
 	private void instanciePecaXadrez(char coluna, int linha, PecaXadrez peca){
 		tabuleiro.placePeca(peca, new PosicaoXadrez(coluna, linha).xadPosicao());
+		pecanoTabuleiro.add(peca);
 	}
 	
 	private void inicialSetup() { // funcao que faz inicializacao da partida de xadrez
