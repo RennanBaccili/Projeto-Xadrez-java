@@ -15,7 +15,7 @@ public class Programa {
 	while(true) {
 		try {
 			UI.limparTela();
-			UI.printTabuleiro(partidadeXadrez.Getpecas()); // Interface de usuario UI
+			UI.printPartida(partidadeXadrez); // Interface de usuario UI
 			System.out.println();
 			System.out.print("Informe posicão inicial: ");
 			PosicaoXadrez pinicial = UI.leiaPosicao(sc);

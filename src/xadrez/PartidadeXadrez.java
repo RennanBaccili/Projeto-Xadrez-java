@@ -8,12 +8,25 @@ import xadrez.pecas.Torre;
 
 public class PartidadeXadrez {
 
+	private int turno;
+	private Cor vezdoJogador;
 	private Tabuleiro tabuleiro;
 
 	public PartidadeXadrez() {
 		tabuleiro = new Tabuleiro(8, 8);// classe que determina o tamanho de um tabuleiro
+		turno = 1; // JOGO COMEÇA NO PRIMEIRO TURNO
+		vezdoJogador =Cor.WHITE; // Quem começa é as brancas por padrão
 		inicialSetup();
 	}
+	
+	public int getTurno() {
+		return turno;
+	}
+	
+	public Cor getVezdoJogador() {
+		return vezdoJogador;
+	}
+	
 	
 	public PecaXadrez[][] Getpecas() {
 //pelo desevenvolvimente em camadas, o programa deve enxergar apenas pecaXadrez, e nao a Peça interna que  esta na parte acima
@@ -43,6 +56,7 @@ public class PartidadeXadrez {
 		 o programa lança uma exception */
 		validacaopFinal(pinicial,pfinal);
 		Peca capturaPeca = moverPeca(pinicial, pfinal); // operacao responsavel por movimentar peca
+		trocaTurno(); // após jogadas, troca o turno
 		return (PecaXadrez)capturaPeca; //  ele retorna a peca capturada, conceito de downcast
 	}
 	
@@ -58,6 +72,9 @@ public class PartidadeXadrez {
 		if (!tabuleiro.temPeca(posicao)) { // se nã́o tiver peca para ser movida emprime o erro abaixo
 			throw new ExcecaoXadrez("Não existe peça na posição de origem");
 		}
+		if(vezdoJogador != ((PecaXadrez)tabuleiro.peca(posicao)).getCor()) {//transformei o tabuleiro em PecaXadrez
+			throw new ExcecaoXadrez("A peça escolhida não é sua ");
+		}
 		if(!tabuleiro.peca(posicao).temMovimentoPossivel()) {
 			throw new ExcecaoXadrez("Não existe movimentos possiveis para a peça escolhida");
 		}
@@ -68,6 +85,12 @@ public class PartidadeXadrez {
 			throw new ExcecaoXadrez("A peça não pode se mover para posição de destino");
 		}
 	}
+	
+	private void trocaTurno() {
+		turno++;
+		vezdoJogador = (vezdoJogador == Cor.WHITE) ? Cor.BLACK : Cor.WHITE;
+	}
+	
 	
 	//instanciacao de peca dentro do tabuleiro
 	private void instanciePecaXadrez(char coluna, int linha, PecaXadrez peca){
