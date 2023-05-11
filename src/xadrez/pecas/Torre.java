@@ -14,4 +14,10 @@ public class Torre extends PecaXadrez{ // tambem chamada de Rook
 	public String toString() {
 		return "T"; //T de torre ou R de rook
 	}
+
+	@Override
+	public boolean[][] possiveisMovimentos() {
+		boolean[][] mat = new boolean[getTabuleiro().getLinhas()][getTabuleiro().getColunas()]; // ele pega as matrizes do bauleiro
+		return mat;
+	}
 }

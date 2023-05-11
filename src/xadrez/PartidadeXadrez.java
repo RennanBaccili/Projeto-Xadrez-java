@@ -49,6 +49,9 @@ public class PartidadeXadrez {
 		if (!tabuleiro.temPeca(posicao)) { // se nã́o tiver peca para ser movida emprime o erro abaixo
 			throw new ExcecaoXadrez("Não existe peça na posição de origem");
 		}
+		if(!tabuleiro.peca(posicao).temMovimentoPossivel()) {
+			throw new ExcecaoXadrez("Não existe movimentos possiveis para a peça escolhida");
+		}
 	}
 	
 	//instanciacao de peca dentro do tabuleiro

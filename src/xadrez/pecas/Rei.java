@@ -16,4 +16,9 @@ public class Rei extends PecaXadrez{
 		return "R"; //T de torre ou R de rook
 	}
 
+	@Override
+	public boolean[][] possiveisMovimentos() {
+		boolean[][] mat = new boolean[getTabuleiro().getLinhas()][getTabuleiro().getColunas()]; // ele pega as matrizes do bauleiro
+		return mat;
+	}
 }
