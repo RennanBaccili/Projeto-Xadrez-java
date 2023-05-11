@@ -1,6 +1,7 @@
 package xadrez;
 
 import jogodetabueiro.Peca;
+import jogodetabueiro.Posicao;
 import jogodetabueiro.Tabuleiro;
 
 public abstract class PecaXadrez extends Peca{
@@ -15,6 +16,10 @@ public abstract class PecaXadrez extends Peca{
 	public Cor getCor() {
 		return cor;
 	}
-
+	
+	protected boolean temPecaInimiga(Posicao posicao) {
+		PecaXadrez p = (PecaXadrez)getTabuleiro().peca(posicao); // variavel p vai receber a peca em determinada posicao
+		return p != null && p.getCor() != cor; // aquii eui testo se aposicao é adversaria
+	}
 
 }

@@ -16,7 +16,7 @@ public class Torre extends PecaXadrez{ // tambem chamada de Rook
 	}
 
 	@Override
-	public boolean[][] possiveisMovimentos() {
+	public boolean[][] possiveisMovimentos() { 
 		boolean[][] mat = new boolean[getTabuleiro().getLinhas()][getTabuleiro().getColunas()]; // ele pega as matrizes do bauleiro
 		return mat;
 	}

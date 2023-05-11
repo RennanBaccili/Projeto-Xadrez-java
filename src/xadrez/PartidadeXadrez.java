@@ -31,8 +31,9 @@ public class PartidadeXadrez {
 	public PecaXadrez exeMoverPeca(PosicaoXadrez posicaoInicial,PosicaoXadrez posicaoFinal) {
 		Posicao pinicial = posicaoInicial.xadPosicao(); // aqui estanciamos posicao inicial
 		Posicao pfinal = posicaoFinal.xadPosicao(); // e posicao final
-		validacaoPeca(pinicial); /* essa operação determina se existe uma peça no local indicado, se não tiver peça a ser movida
+		validacaoPeca(pinicial);/* essa operação determina se existe uma peça no local indicado, se não tiver peça a ser movida
 		 o programa lança uma exception */
+		validacaopFinal(pinicial,pfinal);
 		Peca capturaPeca = moverPeca(pinicial, pfinal); // operacao responsavel por movimentar peca
 		return (PecaXadrez)capturaPeca; //  ele retorna a peca capturada, conceito de downcast
 	}
@@ -51,6 +52,12 @@ public class PartidadeXadrez {
 		}
 		if(!tabuleiro.peca(posicao).temMovimentoPossivel()) {
 			throw new ExcecaoXadrez("Não existe movimentos possiveis para a peça escolhida");
+		}
+	}
+	
+	private void validacaopFinal(Posicao pinicial, Posicao pfinal) {
+		if(!tabuleiro.peca(pinicial).possivelMovimento(pfinal)){
+			throw new ExcecaoXadrez("A peça não pode se mover para posição de destino");
 		}
 	}
 	
