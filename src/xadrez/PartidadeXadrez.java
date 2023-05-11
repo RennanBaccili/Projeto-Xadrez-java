@@ -26,6 +26,14 @@ public class PartidadeXadrez {
 		return mat;
 	}
 	
+	public boolean[][] movimentoPossivel(PosicaoXadrez pinicialPosicao)	{
+		Posicao posicao =  pinicialPosicao.xadPosicao();
+		validacaoPeca(posicao);
+		return tabuleiro.peca(posicao).possiveisMovimentos();
+		
+		
+	}
+	
 	//movimento de peca
 	
 	public PecaXadrez exeMoverPeca(PosicaoXadrez posicaoInicial,PosicaoXadrez posicaoFinal) {

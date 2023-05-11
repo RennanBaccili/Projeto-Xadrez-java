@@ -54,16 +54,32 @@ public class UI {
 		for (int i = 0; i < pecas.length; i++) {
 			System.out.print((8 - i) + " ");
 			for (int j = 0; j < pecas.length; j++) {
-				printPeca(pecas[i][j]); // para imprimir as pecas
+				printPeca(pecas[i][j],false); // para imprimir as pecas
+			}
+			System.out.println();
+		}
+		System.out.println("  a b c d e f g h");
+	}
+	
+	
+	public static void printTabuleiro(PecaXadrez[][] pecas,boolean[][] movimentoPossivel) { // Interface de usuario
+		for (int i = 0; i < pecas.length; i++) {
+			System.out.print((8 - i) + " ");
+			for (int j = 0; j < pecas.length; j++) {
+				printPeca(pecas[i][j],movimentoPossivel[i][j]); // para imprimir as pecas
 			}
 			System.out.println();
 		}
 		System.out.println("  a b c d e f g h");
 	}
 
-	private static void printPeca(PecaXadrez peca) { // imprimir pecas
+	private static void printPeca(PecaXadrez peca, boolean background) { // imprimir pecas
+		if (background) {
+			System.out.print(ANSI_BLUE_BACKGROUND);
+		}
+	
 		if (peca == null) {
-			System.out.print("-"); // valor null é aonde não tem peça
+			System.out.print("-" + ANSI_RESET); // valor null é aonde não tem peça
 		} 
 		else {
 			if(peca.getCor() == Cor.WHITE){

@@ -20,6 +20,10 @@ public class Programa {
 			System.out.print("Informe posicão inicial: ");
 			PosicaoXadrez pinicial = UI.leiaPosicao(sc);
 			
+			boolean[][] movimentoPossivel = partidadeXadrez.movimentoPossivel(pinicial);
+			UI.limparTela();
+			UI.printTabuleiro(partidadeXadrez.Getpecas(),movimentoPossivel);
+			
 			System.out.println();
 			System.out.print("Informe posicão Final: ");
 			PosicaoXadrez pfinal = UI.leiaPosicao(sc);
