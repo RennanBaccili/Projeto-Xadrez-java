@@ -17,6 +17,10 @@ public abstract class PecaXadrez extends Peca{
 		return cor;
 	}
 	
+	public PosicaoXadrez getPosicaoXadrez() {
+		return  PosicaoXadrez.dePosicao(posicao); // converto a posição da peça para dePosicao
+	}
+	
 	protected boolean temPecaInimiga(Posicao posicao) {
 		PecaXadrez p = (PecaXadrez)getTabuleiro().peca(posicao); // variavel p vai receber a peca em determinada posicao
 		return p != null && p.getCor() != cor; // aquii eui testo se aposicao é adversaria

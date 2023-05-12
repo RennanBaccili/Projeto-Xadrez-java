@@ -2,6 +2,7 @@ package xadrez;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jogodetabueiro.Peca;
 import jogodetabueiro.Posicao;
@@ -14,6 +15,7 @@ public class PartidadeXadrez {
 	private int turno;
 	private Cor vezdoJogador;
 	private Tabuleiro tabuleiro;
+	private boolean check; //por padrão começa com false
 	
 	private List<Peca> pecanoTabuleiro = new ArrayList<>();
 	private List<Peca> pecasCapturadas = new ArrayList<>();
@@ -31,6 +33,10 @@ public class PartidadeXadrez {
 	
 	public Cor getVezdoJogador() {
 		return vezdoJogador;
+	}
+	
+	public boolean getCheck() {
+		return check;
 	}
 	
 	
@@ -62,6 +68,14 @@ public class PartidadeXadrez {
 		 o programa lança uma exception */
 		validacaopFinal(pinicial,pfinal);
 		Peca capturaPeca = moverPeca(pinicial, pfinal); // operacao responsavel por movimentar peca
+		
+		if(testeCheck(vezdoJogador)) {
+			desfazerMovimento(pinicial, pfinal, capturaPeca);
+			throw new ExcecaoXadrez("Você não pode se colcoar em check");
+		}
+		
+		check = (testeCheck(oponente(vezdoJogador))) ? true : false; // teste check do oponente
+		
 		trocaTurno(); // após jogadas, troca o turno
 		return (PecaXadrez)capturaPeca; //  ele retorna a peca capturada, conceito de downcast
 	}
@@ -77,6 +91,16 @@ public class PartidadeXadrez {
 			
 		}
 		return capturaPeca;
+	}
+	
+	private void desfazerMovimento(Posicao pinicial, Posicao pfinal,Peca capturaPeca) { // desfazer movimento é para evitar que o jogador se coloque em xeque
+		Peca p = tabuleiro.removePeca(pinicial);
+		tabuleiro.placePeca(p, pinicial);
+		if(capturaPeca != null) {
+			tabuleiro.placePeca(capturaPeca, pfinal);
+			pecasCapturadas.remove(pecasCapturadas); // remover da lista de peca capturada
+			pecanoTabuleiro.add((Peca) pecasCapturadas);
+		}
 	}
 	
 	
@@ -103,6 +127,32 @@ public class PartidadeXadrez {
 		vezdoJogador = (vezdoJogador == Cor.WHITE) ? Cor.BLACK : Cor.WHITE;
 	}
 	
+	// sistema de check
+	private Cor oponente(Cor cor) {
+		return (cor == Cor.WHITE) ? Cor.BLACK : Cor.WHITE;
+	}
+	
+	private PecaXadrez Rei(Cor cor) {
+		List<Peca> list = pecanoTabuleiro.stream().filter(x -> ((PecaXadrez)x).getCor() == cor).collect(Collectors.toList());
+		for(Peca p:list) {
+			if (p instanceof Rei) {
+				return (PecaXadrez)p;
+			}
+		}
+		throw new IllegalStateException("Não tem o Rei " + cor + " no tabuleiro");
+	}
+	
+	private  boolean testeCheck(Cor cor) {
+		Posicao ReiPosicao = Rei(cor).getPosicaoXadrez().xadPosicao(); 
+		List<Peca> pecaOponente = pecanoTabuleiro.stream().filter(x -> ((PecaXadrez)x).getCor() == oponente(cor)).collect(Collectors.toList());
+		for(Peca p: pecaOponente) { 
+			boolean[][] mat = p.possiveisMovimentos(); // uma varredura das peças do oponente
+			if(mat[ReiPosicao.getLinha()][ReiPosicao.getColuna()]) { // se for verdadeiro o Rei está em check
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	//instanciacao de peca dentro do tabuleiro
 	private void instanciePecaXadrez(char coluna, int linha, PecaXadrez peca){
@@ -112,16 +162,17 @@ public class PartidadeXadrez {
 	
 	private void inicialSetup() { // funcao que faz inicializacao da partida de xadrez
 		instanciePecaXadrez('c',1, new Torre(tabuleiro,Cor.WHITE)); // colocamos as pecas
-		instanciePecaXadrez('c',2, new Rei(tabuleiro,Cor.WHITE));
-		instanciePecaXadrez('e',2, new Rei(tabuleiro,Cor.WHITE));
-		instanciePecaXadrez('e',1, new Rei(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('c',2, new Torre(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('e',2, new Torre(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('e',1, new Torre(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('d',2, new Torre(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('d',1, new Rei(tabuleiro,Cor.WHITE));
 		
-		instanciePecaXadrez('c',7, new Rei(tabuleiro,Cor.BLACK));
-		instanciePecaXadrez('c',8, new Rei(tabuleiro,Cor.BLACK));
-		instanciePecaXadrez('d',7, new Rei(tabuleiro,Cor.BLACK));
-		instanciePecaXadrez('e',7, new Rei(tabuleiro,Cor.BLACK));
-		instanciePecaXadrez('e',8, new Rei(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('c',7, new Torre(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('c',8, new Torre(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('d',7, new Torre(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('e',7, new Torre(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('e',8, new Torre(tabuleiro,Cor.BLACK));
 		instanciePecaXadrez('d',8, new Rei(tabuleiro,Cor.BLACK));
 	}
 }

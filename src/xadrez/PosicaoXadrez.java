@@ -9,7 +9,7 @@ public class PosicaoXadrez { // sistema de prosição de xadrez
 	
 	
 	public PosicaoXadrez(char coluna, int linha) {
-		if (coluna < 'a' || coluna > 'h' || linha < 1 || linha > 8) { // caso o usuario digite um valor maior que o tabuleiro
+		if (coluna < 'a' || coluna > 'h' || linha < 0 || linha > 8) { // caso o usuario digite um valor maior que o tabuleiro
 			throw new ExcecaoXadrez ("Erro ao estanciar posição de xadrez: valores validos [a1 até h8]");
 		}
 		this.coluna = coluna;
@@ -30,7 +30,7 @@ public class PosicaoXadrez { // sistema de prosição de xadrez
 		return new Posicao(8 - linha, coluna - 'a');
 	}
 	protected static PosicaoXadrez dePosicao(Posicao posicao) { // invertemos a matriz para ler "linha primeiro" e depois coluna.
-		return new PosicaoXadrez((char)('a' - posicao.getColuna()),8 - posicao.getLinha());
+		return new PosicaoXadrez((char)('a' + posicao.getColuna()),8 - posicao.getLinha());
 	}
 	
 	@Override

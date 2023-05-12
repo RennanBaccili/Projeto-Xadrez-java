@@ -59,8 +59,12 @@ public class UI {
 		printTabuleiro(partidadexadrez.Getpecas());
 		System.out.println();
 		printPecasCapturadas(capturada);
+		System.out.println();
 		System.out.println("Turno : " + partidadexadrez.getTurno());
 		System.out.println("Esperando o turno do jogard " + partidadexadrez.getVezdoJogador());
+		if(partidadexadrez.getCheck()) {
+			System.out.println("CHECK!");
+		}
 	}
 	
 	public static void printTabuleiro(PecaXadrez[][] pecas) { // Interface de usuario
