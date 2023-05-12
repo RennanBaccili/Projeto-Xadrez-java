@@ -16,6 +16,7 @@ public class PartidadeXadrez {
 	private Cor vezdoJogador;
 	private Tabuleiro tabuleiro;
 	private boolean check; //por padrão começa com false
+	private boolean checkMate;
 	
 	private List<Peca> pecanoTabuleiro = new ArrayList<>();
 	private List<Peca> pecasCapturadas = new ArrayList<>();
@@ -24,6 +25,7 @@ public class PartidadeXadrez {
 		tabuleiro = new Tabuleiro(8, 8);// classe que determina o tamanho de um tabuleiro
 		turno = 1; // JOGO COMEÇA NO PRIMEIRO TURNO
 		vezdoJogador =Cor.WHITE; // Quem começa é as brancas por padrão
+		checkMate = false;
 		inicialSetup();
 	}
 	
@@ -38,7 +40,9 @@ public class PartidadeXadrez {
 	public boolean getCheck() {
 		return check;
 	}
-	
+	public boolean getCheckMate() {
+		return checkMate;
+	}
 	
 	public PecaXadrez[][] Getpecas() {
 //pelo desevenvolvimente em camadas, o programa deve enxergar apenas pecaXadrez, e nao a Peça interna que  esta na parte acima
@@ -76,7 +80,12 @@ public class PartidadeXadrez {
 		
 		check = (testeCheck(oponente(vezdoJogador))) ? true : false; // teste check do oponente
 		
-		trocaTurno(); // após jogadas, troca o turno
+		if (testeCheckMate(oponente(vezdoJogador))) {
+			checkMate = true;
+		}
+		else {
+			trocaTurno(); // após jogadas, troca o turno
+		}
 		return (PecaXadrez)capturaPeca; //  ele retorna a peca capturada, conceito de downcast
 	}
 	
@@ -98,8 +107,8 @@ public class PartidadeXadrez {
 		tabuleiro.placePeca(p, pinicial);
 		if(capturaPeca != null) {
 			tabuleiro.placePeca(capturaPeca, pfinal);
-			pecasCapturadas.remove(pecasCapturadas); // remover da lista de peca capturada
-			pecanoTabuleiro.add((Peca) pecasCapturadas);
+			pecasCapturadas.remove(capturaPeca); // remover da lista de peca capturada
+			pecanoTabuleiro.add((Peca) capturaPeca);
 		}
 	}
 	
@@ -152,6 +161,32 @@ public class PartidadeXadrez {
 			}
 		}
 		return false;
+	}
+	
+		private boolean testeCheckMate(Cor cor) {
+		if(!testeCheck(cor)) {
+			return false;
+		}
+		List<Peca> list = pecanoTabuleiro.stream().filter(x -> ((PecaXadrez)x).getCor() == cor).collect(Collectors.toList());
+		// vou pegar todas as peças do jogador e ver se ela tem movimentos possiveis para defender o rei
+		for (Peca p:list) {
+			boolean[][] mat = p.possiveisMovimentos();
+			for (int i = 0; i<tabuleiro.getLinhas();i++) {
+				for(int j = 0;j<tabuleiro.getColunas();j++) {
+					if(mat[i][j]) { // testar se o movimento possivel tira do check
+						Posicao pinicial = ((PecaXadrez)p).getPosicaoXadrez().xadPosicao(); // pego posicao da peça
+						Posicao pfinal = new Posicao(i,j);
+						Peca pecasCapturadas = moverPeca(pinicial, pfinal); // eu movimento a peça
+						boolean testCheck = testeCheck(cor); // ele testa se o Rei ainda está em check
+						desfazerMovimento(pinicial, pfinal, pecasCapturadas);
+						if (!testCheck) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
 	}
 	
 	//instanciacao de peca dentro do tabuleiro

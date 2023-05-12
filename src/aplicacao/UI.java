@@ -61,9 +61,14 @@ public class UI {
 		printPecasCapturadas(capturada);
 		System.out.println();
 		System.out.println("Turno : " + partidadexadrez.getTurno());
-		System.out.println("Esperando o turno do jogard " + partidadexadrez.getVezdoJogador());
-		if(partidadexadrez.getCheck()) {
-			System.out.println("CHECK!");
+		if(!partidadexadrez.getCheckMate()) {
+		System.out.println("Esperando o turno do jogardor " + partidadexadrez.getVezdoJogador());
+			if(partidadexadrez.getCheck()) {
+				System.out.println("CHECK!");
+			}
+		} else {
+			System.out.println("CHECKMAT!");
+			System.out.println("Vencedor: " + partidadexadrez.getVezdoJogador());
 		}
 	}
 	
