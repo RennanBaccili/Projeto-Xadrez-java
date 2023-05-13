@@ -91,7 +91,8 @@ public class PartidadeXadrez {
 	}
 	
 	private Peca moverPeca(Posicao pinicial, Posicao pfinal) { // logica de realizar um movimento
-		Peca p = tabuleiro.removePeca(pinicial); // a peca vai ser removida da posicao inicial e movida para a final
+		PecaXadrez p = (PecaXadrez) tabuleiro.removePeca(pinicial); // a peca vai ser removida da posicao inicial e movida para a final
+		p.somaMove(); // contador
 		Peca capturaPeca = tabuleiro.removePeca(pfinal); 
 		tabuleiro.placePeca(p, pfinal); // peça p para o local final
 		
@@ -104,7 +105,8 @@ public class PartidadeXadrez {
 	}
 	
 	private void desfazerMovimento(Posicao pinicial, Posicao pfinal, Peca capturaPeca) { 
-	    Peca p = tabuleiro.removePeca(pfinal);
+		PecaXadrez p = (PecaXadrez)tabuleiro.removePeca(pfinal);
+	    p.decliveMove();// contador
 	    tabuleiro.placePeca(p, pinicial);
 	    if(capturaPeca != null) {
 	        tabuleiro.placePeca(capturaPeca, pfinal);
