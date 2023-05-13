@@ -8,6 +8,7 @@ import jogodetabueiro.Peca;
 import jogodetabueiro.Posicao;
 import jogodetabueiro.Tabuleiro;
 import xadrez.pecas.Bispo;
+import xadrez.pecas.Cavalo;
 import xadrez.pecas.Peao;
 import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
@@ -213,7 +214,10 @@ public class PartidadeXadrez {
 		instanciePecaXadrez('h',1, new Torre(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('c',1, new Bispo(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('f',1, new Bispo(tabuleiro,Cor.WHITE));
-		
+		instanciePecaXadrez('b',1, new Cavalo(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('g',1, new Cavalo(tabuleiro,Cor.WHITE));
+
+
 		
 		instanciePecaXadrez('a',7, new Peao(tabuleiro,Cor.BLACK)); // colocamos as pecas
 		instanciePecaXadrez('b',7, new Peao(tabuleiro,Cor.BLACK));
@@ -228,5 +232,7 @@ public class PartidadeXadrez {
 		instanciePecaXadrez('h',8, new Torre(tabuleiro,Cor.BLACK));
 		instanciePecaXadrez('c',8, new Bispo(tabuleiro,Cor.BLACK));
 		instanciePecaXadrez('f',8, new Bispo(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('b',8, new Cavalo(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('g',8, new Cavalo(tabuleiro,Cor.BLACK));
 	}
 }
