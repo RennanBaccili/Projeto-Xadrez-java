@@ -12,10 +12,7 @@ public class Rei extends PecaXadrez{
 		// TODO Auto-generated constructor stub
 	}
 	
-	@Override
-	public String toString() {
-		return "R"; //T de torre ou R de rook
-	}
+	
 
 	private boolean podeMover(Posicao posicao){//metodo vai dizer se o Rei pode mover para determinada posicao
 		PecaXadrez p = (PecaXadrez)getTabuleiro().peca(posicao);
@@ -74,5 +71,9 @@ public class Rei extends PecaXadrez{
 	}
 		
 		return mat;
+	}
+	@Override
+	public String toString() {
+		return "R"; //T de torre ou R de rook
 	}
 }

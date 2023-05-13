@@ -11,10 +11,7 @@ public class Torre extends PecaXadrez{ // tambem chamada de Rook
 		super(tabuleiro, cor); // repassou a chamada para a sub class torre
 	}
 
-	@Override
-	public String toString() {
-		return "T"; //T de torre ou R de rook
-	}
+
 
 	@Override
 	public boolean[][] possiveisMovimentos() {// nessa parte do código definimos todos os  valores que ela poderia andar com ofalso
@@ -66,5 +63,9 @@ public class Torre extends PecaXadrez{ // tambem chamada de Rook
 			mat[p.getLinha()][p.getColuna()] = true; // se for ela podera se movimentar para area inimiga
 		}
 		return mat;
+	}
+	
+	public String toString() {
+		return "T"; //T de torre ou R de rook
 	}
 }

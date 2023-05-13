@@ -10,6 +10,7 @@ import jogodetabueiro.Tabuleiro;
 import xadrez.pecas.Bispo;
 import xadrez.pecas.Cavalo;
 import xadrez.pecas.Peao;
+import xadrez.pecas.Rainha;
 import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
 
@@ -203,19 +204,21 @@ public class PartidadeXadrez {
 	private void inicialSetup() { // funcao que faz inicializacao da partida de xadrez
 		instanciePecaXadrez('a',2, new Peao(tabuleiro,Cor.WHITE)); // colocamos as pecas
 		instanciePecaXadrez('b',2, new Peao(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('b',1, new Cavalo(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('c',2, new Peao(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('d',1, new Rei(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('d',2, new Peao(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('e',2, new Peao(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('f',2, new Peao(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('g',2, new Peao(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('g',1, new Cavalo(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('h',2, new Peao(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('a',1, new Torre(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('h',1, new Torre(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('c',1, new Bispo(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('f',1, new Bispo(tabuleiro,Cor.WHITE));
-		instanciePecaXadrez('b',1, new Cavalo(tabuleiro,Cor.WHITE));
-		instanciePecaXadrez('g',1, new Cavalo(tabuleiro,Cor.WHITE));
+
+		instanciePecaXadrez('e',1, new Rainha(tabuleiro,Cor.WHITE));
 
 
 		
@@ -234,5 +237,6 @@ public class PartidadeXadrez {
 		instanciePecaXadrez('f',8, new Bispo(tabuleiro,Cor.BLACK));
 		instanciePecaXadrez('b',8, new Cavalo(tabuleiro,Cor.BLACK));
 		instanciePecaXadrez('g',8, new Cavalo(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('e',8, new Rainha(tabuleiro,Cor.BLACK));
 	}
 }
