@@ -29,6 +29,7 @@ public class PosicaoXadrez { // sistema de prosição de xadrez
 	protected Posicao xadPosicao() {  // posicao convertida para a posicao usada no xadrez
 		return new Posicao(8 - linha, coluna - 'a');
 	}
+	
 	protected static PosicaoXadrez dePosicao(Posicao posicao) { // invertemos a matriz para ler "linha primeiro" e depois coluna.
 		return new PosicaoXadrez((char)('a' + posicao.getColuna()),8 - posicao.getLinha());
 	}

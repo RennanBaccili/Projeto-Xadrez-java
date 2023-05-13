@@ -25,7 +25,6 @@ public class PartidadeXadrez {
 		tabuleiro = new Tabuleiro(8, 8);// classe que determina o tamanho de um tabuleiro
 		turno = 1; // JOGO COMEÇA NO PRIMEIRO TURNO
 		vezdoJogador =Cor.WHITE; // Quem começa é as brancas por padrão
-		checkMate = false;
 		inicialSetup();
 	}
 	
@@ -33,7 +32,7 @@ public class PartidadeXadrez {
 		return turno;
 	}
 	
-	public Cor getVezdoJogador() {
+	public Cor getVezdoJogador() {	
 		return vezdoJogador;
 	}
 	
@@ -43,6 +42,8 @@ public class PartidadeXadrez {
 	public boolean getCheckMate() {
 		return checkMate;
 	}
+	
+	
 	
 	public PecaXadrez[][] Getpecas() {
 //pelo desevenvolvimente em camadas, o programa deve enxergar apenas pecaXadrez, e nao a Peça interna que  esta na parte acima
@@ -71,22 +72,22 @@ public class PartidadeXadrez {
 		validacaoPeca(pinicial);/* essa operação determina se existe uma peça no local indicado, se não tiver peça a ser movida
 		 o programa lança uma exception */
 		validacaopFinal(pinicial,pfinal);
-		Peca capturaPeca = moverPeca(pinicial, pfinal); // operacao responsavel por movimentar peca
+		Peca capturaPeca  = moverPeca(pinicial, pfinal); // operacao responsavel por movimentar peca
 		
 		if(testeCheck(vezdoJogador)) {
 			desfazerMovimento(pinicial, pfinal, capturaPeca);
-			throw new ExcecaoXadrez("Você não pode se colcoar em check");
+			throw new ExcecaoXadrez("Você não pode se colocar em check");
 		}
 		
 		check = (testeCheck(oponente(vezdoJogador))) ? true : false; // teste check do oponente
-		
-		if (testeCheckMate(oponente(vezdoJogador))) {
+		if(TesteCheckMate(oponente(vezdoJogador))) {
 			checkMate = true;
 		}
 		else {
 			trocaTurno(); // após jogadas, troca o turno
 		}
 		return (PecaXadrez)capturaPeca; //  ele retorna a peca capturada, conceito de downcast
+		
 	}
 	
 	private Peca moverPeca(Posicao pinicial, Posicao pfinal) { // logica de realizar um movimento
@@ -96,22 +97,21 @@ public class PartidadeXadrez {
 		
 		if (capturaPeca != null) {
 			pecanoTabuleiro.remove(capturaPeca);
-			pecasCapturadas.add(capturaPeca);
+			pecasCapturadas.add((Peca) capturaPeca);
 			
 		}
 		return capturaPeca;
 	}
 	
-	private void desfazerMovimento(Posicao pinicial, Posicao pfinal,Peca capturaPeca) { // desfazer movimento é para evitar que o jogador se coloque em xeque
-		Peca p = tabuleiro.removePeca(pinicial);
-		tabuleiro.placePeca(p, pinicial);
-		if(capturaPeca != null) {
-			tabuleiro.placePeca(capturaPeca, pfinal);
-			pecasCapturadas.remove(capturaPeca); // remover da lista de peca capturada
-			pecanoTabuleiro.add((Peca) capturaPeca);
-		}
-	}
-	
+	private void desfazerMovimento(Posicao pinicial, Posicao pfinal, Peca capturaPeca) { 
+	    Peca p = tabuleiro.removePeca(pfinal);
+	    tabuleiro.placePeca(p, pinicial);
+	    if(capturaPeca != null) {
+	        tabuleiro.placePeca(capturaPeca, pfinal);
+	        pecasCapturadas.remove(capturaPeca);
+	        pecanoTabuleiro.add(capturaPeca);
+	    }
+	}	
 	
 	private void validacaoPeca(Posicao posicao) {
 		if (!tabuleiro.temPeca(posicao)) { // se nã́o tiver peca para ser movida emprime o erro abaixo
@@ -163,7 +163,7 @@ public class PartidadeXadrez {
 		return false;
 	}
 	
-		private boolean testeCheckMate(Cor cor) {
+	private boolean TesteCheckMate(Cor cor) {
 		if(!testeCheck(cor)) {
 			return false;
 		}
@@ -172,14 +172,14 @@ public class PartidadeXadrez {
 		for (Peca p:list) {
 			boolean[][] mat = p.possiveisMovimentos();
 			for (int i = 0; i<tabuleiro.getLinhas();i++) {
-				for(int j = 0;j<tabuleiro.getColunas();j++) {
+				for(int j = 0; j<tabuleiro.getColunas();j++) {
 					if(mat[i][j]) { // testar se o movimento possivel tira do check
 						Posicao pinicial = ((PecaXadrez)p).getPosicaoXadrez().xadPosicao(); // pego posicao da peça
 						Posicao pfinal = new Posicao(i,j);
-						Peca pecasCapturadas = moverPeca(pinicial, pfinal); // eu movimento a peça
-						boolean testCheck = testeCheck(cor); // ele testa se o Rei ainda está em check
-						desfazerMovimento(pinicial, pfinal, pecasCapturadas);
-						if (!testCheck) {
+						Peca capturaPeca = moverPeca(pinicial, pfinal); // eu movimento a peça
+						boolean testeCheck = testeCheck(cor); // ele testa se o Rei ainda está em check
+						desfazerMovimento(pinicial, pfinal, capturaPeca);
+						if (!testeCheck) {
 							return false;
 						}
 					}
