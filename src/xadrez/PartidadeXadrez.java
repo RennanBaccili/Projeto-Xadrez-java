@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import jogodetabueiro.Peca;
 import jogodetabueiro.Posicao;
 import jogodetabueiro.Tabuleiro;
+import xadrez.pecas.Bispo;
 import xadrez.pecas.Peao;
 import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
@@ -210,6 +211,8 @@ public class PartidadeXadrez {
 		instanciePecaXadrez('h',2, new Peao(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('a',1, new Torre(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('h',1, new Torre(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('c',1, new Bispo(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('f',1, new Bispo(tabuleiro,Cor.WHITE));
 		
 		
 		instanciePecaXadrez('a',7, new Peao(tabuleiro,Cor.BLACK)); // colocamos as pecas
@@ -223,5 +226,7 @@ public class PartidadeXadrez {
 		instanciePecaXadrez('h',7, new Peao(tabuleiro,Cor.BLACK));
 		instanciePecaXadrez('a',8, new Torre(tabuleiro,Cor.BLACK));
 		instanciePecaXadrez('h',8, new Torre(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('c',8, new Bispo(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('f',8, new Bispo(tabuleiro,Cor.BLACK));
 	}
 }
