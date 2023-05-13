@@ -29,6 +29,7 @@ public class Cavalo extends PecaXadrez{
 			mat[p.getLinha()][p.getColuna()] = true;
 		}
 		
+		
 		//abaixo
 		p.setvalues(posicao.getLinha()-2,posicao.getColuna()-1);// setamos os valores de posicao acima
 		if(getTabuleiro().posicaoExiste(p)&& podeMover(p)) { // se 
@@ -44,7 +45,7 @@ public class Cavalo extends PecaXadrez{
 		p.setvalues(posicao.getLinha()-1,posicao.getColuna()+2); // setamos os valores de posicao acima
 		if(getTabuleiro().posicaoExiste(p)&& podeMover(p)) { // se 
 			mat[p.getLinha()][p.getColuna()] = true;
-			
+		}
 		//noroeste
 		p.setvalues(posicao.getLinha()+1,posicao.getColuna()+2); // setamos os valores de posicao acima
 		if(getTabuleiro().posicaoExiste(p)&& podeMover(p)) { // se 
@@ -66,7 +67,7 @@ public class Cavalo extends PecaXadrez{
 		if(getTabuleiro().posicaoExiste(p)&& podeMover(p)) { // se 
 			mat[p.getLinha()][p.getColuna()] = true;
 		}
-	}
+
 		
 		return mat;
 	}
