@@ -103,8 +103,24 @@ public class PartidadeXadrez {
 		if (capturaPeca != null) {
 			pecanoTabuleiro.remove(capturaPeca);
 			pecasCapturadas.add((Peca) capturaPeca);
-			
 		}
+		// # movimento especial rook pequeno
+		if(p instanceof Rei && pfinal.getColuna() == pinicial.getColuna()+2) {
+			Posicao pinicialT = new Posicao(pinicial.getLinha(),pinicial.getColuna()+3);
+			Posicao pfinalT = new Posicao(pinicial.getLinha(),pinicial.getColuna()+1);
+			PecaXadrez torre = (PecaXadrez)tabuleiro.removePeca(pinicialT);
+			tabuleiro.placePeca(torre, pfinalT);
+			torre.somaMove();
+		}
+		// # movimento especial rook grande
+		if(p instanceof Rei && pfinal.getColuna() == pinicial.getColuna()-2) {
+			Posicao pinicialT = new Posicao(pinicial.getLinha(),pinicial.getColuna()-4);
+			Posicao pfinalT = new Posicao(pinicial.getLinha(),pinicial.getColuna()-1);
+			PecaXadrez torre = (PecaXadrez)tabuleiro.removePeca(pinicialT);
+			tabuleiro.placePeca(torre, pfinalT);
+			torre.somaMove();
+		}
+		
 		return capturaPeca;
 	}
 	
@@ -117,6 +133,23 @@ public class PartidadeXadrez {
 	        pecasCapturadas.remove(capturaPeca);
 	        pecanoTabuleiro.add(capturaPeca);
 	    }
+	
+	 // # movimento especial rook pequeno
+		if(p instanceof Rei && pfinal.getColuna() == pinicial.getColuna()+2) {
+			Posicao pinicialT = new Posicao(pinicial.getLinha(),pinicial.getColuna()+3);
+			Posicao pfinalT = new Posicao(pinicial.getLinha(),pinicial.getColuna()+1);
+			PecaXadrez torre = (PecaXadrez)tabuleiro.removePeca(pfinalT);
+			tabuleiro.placePeca(torre, pinicialT);
+			torre.decliveMove();
+		}
+		// # movimento especial rook grande
+		if(p instanceof Rei && pfinal.getColuna() == pinicial.getColuna()-2) {
+			Posicao pinicialT = new Posicao(pinicial.getLinha(),pinicial.getColuna()-4);
+			Posicao pfinalT = new Posicao(pinicial.getLinha(),pinicial.getColuna()-1);
+			PecaXadrez torre = (PecaXadrez)tabuleiro.removePeca(pfinalT);
+			tabuleiro.placePeca(torre, pinicialT);
+			torre.decliveMove();
+	 		}
 	}	
 	
 	private void validacaoPeca(Posicao posicao) {
@@ -206,7 +239,7 @@ public class PartidadeXadrez {
 		instanciePecaXadrez('b',2, new Peao(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('b',1, new Cavalo(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('c',2, new Peao(tabuleiro,Cor.WHITE));
-		instanciePecaXadrez('d',1, new Rei(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('d',1, new Rei(tabuleiro,Cor.WHITE, this));
 		instanciePecaXadrez('d',2, new Peao(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('e',2, new Peao(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('f',2, new Peao(tabuleiro,Cor.WHITE));
@@ -225,7 +258,7 @@ public class PartidadeXadrez {
 		instanciePecaXadrez('a',7, new Peao(tabuleiro,Cor.BLACK)); // colocamos as pecas
 		instanciePecaXadrez('b',7, new Peao(tabuleiro,Cor.BLACK));
 		instanciePecaXadrez('c',7, new Peao(tabuleiro,Cor.BLACK));
-		instanciePecaXadrez('d',8, new Rei(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('d',8, new Rei(tabuleiro,Cor.BLACK, this));
 		instanciePecaXadrez('d',7, new Peao(tabuleiro,Cor.BLACK));
 		instanciePecaXadrez('e',7, new Peao(tabuleiro,Cor.BLACK));
 		instanciePecaXadrez('f',7, new Peao(tabuleiro,Cor.BLACK));
