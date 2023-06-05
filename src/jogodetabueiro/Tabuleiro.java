@@ -31,8 +31,8 @@ public class Tabuleiro {
 		return pecas[linha][coluna];
 	}
 	public Peca peca(Posicao posicao) {// metodo piece para retornar a peça
-		if(!posicaoExiste(posicao)) {
-			throw new ExcecaoTabuleiro("Posição não está do tabuleiro");
+		if(!posicaoExiste(posicao)) { 
+			throw new ExcecaoTabuleiro("Posição não está do tabuleiro");// valor falso
 		}
 		
 		return pecas[posicao.getLinha()][posicao.getColuna()];

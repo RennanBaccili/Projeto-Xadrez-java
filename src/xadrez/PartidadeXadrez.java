@@ -21,7 +21,7 @@ public class PartidadeXadrez {
 	private Tabuleiro tabuleiro;
 	private boolean check; //por padrão começa com false
 	private boolean checkMate;
-	
+	private PecaXadrez enPassantVulnerable;
 	private List<Peca> pecanoTabuleiro = new ArrayList<>();
 	private List<Peca> pecasCapturadas = new ArrayList<>();
 
@@ -46,7 +46,9 @@ public class PartidadeXadrez {
 	public boolean getCheckMate() {
 		return checkMate;
 	}
-	
+	public PecaXadrez getEnPassantVulnerable() {
+		return enPassantVulnerable;
+	}
 	
 	
 	public PecaXadrez[][] Getpecas() {
@@ -83,6 +85,8 @@ public class PartidadeXadrez {
 			throw new ExcecaoXadrez("Você não pode se colocar em check");
 		}
 		
+		PecaXadrez movedPeca = (PecaXadrez)tabuleiro.peca(pfinal); //////
+		
 		check = (testeCheck(oponente(vezdoJogador))) ? true : false; // teste check do oponente
 		if(TesteCheckMate(oponente(vezdoJogador))) {
 			checkMate = true;
@@ -90,6 +94,15 @@ public class PartidadeXadrez {
 		else {
 			trocaTurno(); // após jogadas, troca o turno
 		}
+		
+		// # special move enpassant
+		if(movedPeca instanceof Peao && (pfinal.getLinha() == pinicial.getLinha() -2 || pfinal.getLinha() == pinicial.getLinha() +2)) {
+			enPassantVulnerable = movedPeca;
+		}
+		else {
+			enPassantVulnerable = null;
+		}
+		
 		return (PecaXadrez)capturaPeca; //  ele retorna a peca capturada, conceito de downcast
 		
 	}
@@ -121,6 +134,21 @@ public class PartidadeXadrez {
 			torre.somaMove();
 		}
 		
+		if(p instanceof Peao) {
+			if(pinicial.getColuna() != pfinal.getColuna() && capturaPeca == null) {
+				Posicao peaoPosicao;
+				if(p.getCor() == Cor.WHITE) {
+					peaoPosicao = new Posicao(pfinal.getLinha()+1, pfinal.getLinha());
+				}
+				else {
+					peaoPosicao = new Posicao(pfinal.getLinha()-1, pfinal.getLinha());
+				}
+				capturaPeca = tabuleiro.removePeca(peaoPosicao);
+				pecasCapturadas.add(capturaPeca);
+				pecanoTabuleiro.remove(capturaPeca);
+			}
+		}
+		
 		return capturaPeca;
 	}
 	
@@ -150,6 +178,21 @@ public class PartidadeXadrez {
 			tabuleiro.placePeca(torre, pinicialT);
 			torre.decliveMove();
 	 		}
+		
+		if(p instanceof Peao) {
+			if(pinicial.getColuna() != pfinal.getColuna() && capturaPeca == enPassantVulnerable) {
+				PecaXadrez pawn = (PecaXadrez)tabuleiro.removePeca(pfinal);
+				Posicao peaoPosicao;
+				if(p.getCor() == Cor.WHITE) {
+					peaoPosicao = new Posicao(3, pfinal.getLinha());
+				}
+				else {
+					peaoPosicao = new Posicao(4, pfinal.getLinha());
+				}
+				tabuleiro.placePeca(pawn, peaoPosicao);
+				capturaPeca = tabuleiro.removePeca(peaoPosicao);
+			}
+		}
 	}	
 	
 	private void validacaoPeca(Posicao posicao) {
@@ -174,6 +217,7 @@ public class PartidadeXadrez {
 		turno++;
 		vezdoJogador = (vezdoJogador == Cor.WHITE) ? Cor.BLACK : Cor.WHITE;
 	}
+	
 	
 	// sistema de check
 	private Cor oponente(Cor cor) {
@@ -235,17 +279,17 @@ public class PartidadeXadrez {
 	}
 	
 	private void inicialSetup() { // funcao que faz inicializacao da partida de xadrez
-		instanciePecaXadrez('a',2, new Peao(tabuleiro,Cor.WHITE)); // colocamos as pecas
-		instanciePecaXadrez('b',2, new Peao(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('a',2, new Peao(tabuleiro,Cor.WHITE, this)); // colocamos as pecas
+		instanciePecaXadrez('b',2, new Peao(tabuleiro,Cor.WHITE,this));
 		instanciePecaXadrez('b',1, new Cavalo(tabuleiro,Cor.WHITE));
-		instanciePecaXadrez('c',2, new Peao(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('c',2, new Peao(tabuleiro,Cor.WHITE,this));
 		instanciePecaXadrez('d',1, new Rei(tabuleiro,Cor.WHITE, this));
-		instanciePecaXadrez('d',2, new Peao(tabuleiro,Cor.WHITE));
-		instanciePecaXadrez('e',2, new Peao(tabuleiro,Cor.WHITE));
-		instanciePecaXadrez('f',2, new Peao(tabuleiro,Cor.WHITE));
-		instanciePecaXadrez('g',2, new Peao(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('d',2, new Peao(tabuleiro,Cor.WHITE,this));
+		instanciePecaXadrez('e',2, new Peao(tabuleiro,Cor.WHITE,this));
+		instanciePecaXadrez('f',2, new Peao(tabuleiro,Cor.WHITE,this));
+		instanciePecaXadrez('g',2, new Peao(tabuleiro,Cor.WHITE,this));
 		instanciePecaXadrez('g',1, new Cavalo(tabuleiro,Cor.WHITE));
-		instanciePecaXadrez('h',2, new Peao(tabuleiro,Cor.WHITE));
+		instanciePecaXadrez('h',2, new Peao(tabuleiro,Cor.WHITE,this));
 		instanciePecaXadrez('a',1, new Torre(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('h',1, new Torre(tabuleiro,Cor.WHITE));
 		instanciePecaXadrez('c',1, new Bispo(tabuleiro,Cor.WHITE));
@@ -255,15 +299,15 @@ public class PartidadeXadrez {
 
 
 		
-		instanciePecaXadrez('a',7, new Peao(tabuleiro,Cor.BLACK)); // colocamos as pecas
-		instanciePecaXadrez('b',7, new Peao(tabuleiro,Cor.BLACK));
-		instanciePecaXadrez('c',7, new Peao(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('a',7, new Peao(tabuleiro,Cor.BLACK,this)); // colocamos as pecas
+		instanciePecaXadrez('b',7, new Peao(tabuleiro,Cor.BLACK,this));
+		instanciePecaXadrez('c',7, new Peao(tabuleiro,Cor.BLACK,this));
 		instanciePecaXadrez('d',8, new Rei(tabuleiro,Cor.BLACK, this));
-		instanciePecaXadrez('d',7, new Peao(tabuleiro,Cor.BLACK));
-		instanciePecaXadrez('e',7, new Peao(tabuleiro,Cor.BLACK));
-		instanciePecaXadrez('f',7, new Peao(tabuleiro,Cor.BLACK));
-		instanciePecaXadrez('g',7, new Peao(tabuleiro,Cor.BLACK));
-		instanciePecaXadrez('h',7, new Peao(tabuleiro,Cor.BLACK));
+		instanciePecaXadrez('d',7, new Peao(tabuleiro,Cor.BLACK,this));
+		instanciePecaXadrez('e',7, new Peao(tabuleiro,Cor.BLACK,this));
+		instanciePecaXadrez('f',7, new Peao(tabuleiro,Cor.BLACK,this));
+		instanciePecaXadrez('g',7, new Peao(tabuleiro,Cor.BLACK,this));
+		instanciePecaXadrez('h',7, new Peao(tabuleiro,Cor.BLACK,this));
 		instanciePecaXadrez('a',8, new Torre(tabuleiro,Cor.BLACK));
 		instanciePecaXadrez('h',8, new Torre(tabuleiro,Cor.BLACK));
 		instanciePecaXadrez('c',8, new Bispo(tabuleiro,Cor.BLACK));
