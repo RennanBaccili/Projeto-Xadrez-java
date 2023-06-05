@@ -38,8 +38,12 @@ public class Programa {
 				capturada.add(capturaPeca);
 			}
 			if (partidadeXadrez.getPromocao() != null) {
-				System.out.println("Enter com a peça para a promoção (B/C/R/T): ");
-				String type = sc.nextLine();
+				System.out.println("Enter com a peça para a promoção (B/C/Q/T): ");
+				String type = sc.nextLine().toUpperCase();
+				while(!type.equals("B") && !type.equals("C") && !type.equals("Q") & !type.equals("T")) {
+					System.out.println("Valor Invalido. Digite B/C/Q/T)");
+					type = sc.nextLine().toUpperCase();
+				}
 				partidadeXadrez.replacePromocaoPeca(type);
 			}
 			
